@@ -18,5 +18,5 @@ app.use('/usuario', usuarioRoutes);
 
 // 4. Inicio del servidor
 app.listen(3000, () => {
-    console.log('Server running on port 3000');
+    console.log('Servidor corriendo en el puerto 3000');
 });
