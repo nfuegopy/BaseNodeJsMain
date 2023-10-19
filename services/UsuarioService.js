@@ -1,7 +1,13 @@
+const Usuario = require('../models/Usuario');
 const UsuarioRepository = require ('../repositories/UsuarioRepository');
 class UsuarioService{
-    async listarusuarios(){
-        return await UsuarioRepository.listarusuarios();
+    //Metodo listar usuario
+    async listarUsuarios(){
+        return await UsuarioRepository.listarUsuarios();
+    }
+    // metodo insertar usuario en servicio
+    async insertarUsuario(usuario){
+        return await UsuarioRepository.insertarUsuario(usuario);
     }
 }
 

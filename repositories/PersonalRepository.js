@@ -13,9 +13,8 @@ class PersonalRepository {
         console.log(CI, Nombre, Apellido, Telefono, Email);
         if (!CI || !Nombre || !Apellido || !Telefono || !Email) {
             // Uno o más campos están faltando o son undefined.
-            // Responde con un error antes de llamar a PersonalRepository.
-            res.status(400).json({ success: false, message: 'Faltan campos requeridos' });
-            return;
+            // Lanza un error en lugar de enviar una respuesta.
+            throw new Error('Faltan campos requeridos');
         }
         const [result] = await pool.execute('CALL InsertarPersonal(?, ?, ?, ?, ?)', [CI, Nombre, Apellido, Telefono, Email]);
         return result;

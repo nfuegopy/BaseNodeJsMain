@@ -11,15 +11,20 @@ exports.listarPersonales = async(req, res)=>
        }
 };
 
-//Controllador para insertar Personales
+// Controllador para insertar Personales
 exports.insertarPersonal = async(req, res) => {
-try{
-    const {CI, Nombre, Apellido, Telefono, Email} = req.body;
-    const personal = new Personal(CI, Nombre, Apellido, Telefono, Email);
-    const result = await PersonalService.insertarPersonal(personal);
-    res.json({success: true, message: 'Personal insertado correctamente desde Nodejs', result});
-    }catch(error){
-        console.log(error); 
-        res.status(500).json({success: false, message: 'Ocurrio un error al intentar registrar personal', error});
+    try {
+        const {CI, Nombre, Apellido, Telefono, Email} = req.body;
+        const personal = new Personal(CI, Nombre, Apellido, Telefono, Email);
+        const result = await PersonalService.insertarPersonal(personal);
+        res.json({success: true, message: 'Personal insertado correctamente desde Nodejs', result});
+    } catch (error) {
+        console.log(error);
+        // Comprueba si el mensaje de error es el que lanzaste desde el repositorio.
+        if (error.message === 'Faltan campos requeridos') {
+            res.status(400).json({success: false, message: error.message});
+        } else {
+            res.status(500).json({success: false, message: 'Ocurrio un error al intentar registrar personal', error});
+        }
     }
 };
