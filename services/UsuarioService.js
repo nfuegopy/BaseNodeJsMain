@@ -1,8 +1,10 @@
 const UsuarioRepository = require ('../repositories/UsuarioRepository');
 class UsuarioService{
-    async listarusuarios(){
-        return await UsuarioRepository.listarusuarios();
+    //Metodo Listar usuario
+    async listarusuario(){
+        return await UsuarioRepository.listarusuario();
     }
+    //Otros metodos
 }
 
 module.exports= new UsuarioService();
