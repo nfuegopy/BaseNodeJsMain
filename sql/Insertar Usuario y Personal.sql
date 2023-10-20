@@ -10,7 +10,13 @@ CALL InsertarPersonal('V7890123', 'Monica', 'Ramirez Herrera', '7777777777', 'mo
 CALL InsertarPersonal('V8901234', 'Pedro', 'Gomez Jimenez', '8888888888', 'pedro@email.com');
 CALL InsertarPersonal('V9012345', 'Isabel', 'Vazquez Mora', '9999999999', 'isabel@email.com');
 CALL InsertarPersonal('V0123456', 'Luis', 'Castillo Rojas', '1010101010', 'luis@email.com');
-CALL InsertarUsuario('V1234567', '1989');
-update usuario set Nombre_Usuario = 'Admin' where ID =1;
+-- Preparar los datos
+SET @CI := 'V1234567';
+SET @NombreUsuario := 'Admin';
+SET @Password := '1989';
+-- Insertar nuevo usuario con contraseña encriptada
+INSERT INTO usuario (CI, Nombre_Usuario, Password)
+VALUES (@CI, @NombreUsuario, SHA2(@Password, 256));
+
 CALL InsertarRol('Administrador','Se encarga del manteniemiento total del sistema con acceso total');
 CALL AsignarRolUsuario(1,1);
