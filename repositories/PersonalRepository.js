@@ -10,7 +10,7 @@ class PersonalRepository {
 
     async insertarPersonal(personal){
         const {CI, Nombre, Apellido, Telefono, Email} = personal;
-        console.log(CI, Nombre, Apellido, Telefono, Email);
+        console.log("Se insertaron correctamente los siguientes datos",CI, Nombre, Apellido, Telefono, Email);
         if (!CI || !Nombre || !Apellido || !Telefono || !Email) {
             // Uno o más campos están faltando o son undefined.
             // Responde con un error antes de llamar a PersonalRepository.
