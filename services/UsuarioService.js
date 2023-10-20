@@ -5,6 +5,9 @@ class UsuarioService{
         return await UsuarioRepository.listarusuario();
     }
     //Otros metodos
+    async insertarUsuario(usuario){
+        return await UsuarioRepository.insertarUsuario(usuario);
+    }
 }
 
 module.exports= new UsuarioService();
