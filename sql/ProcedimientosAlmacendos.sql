@@ -37,10 +37,10 @@ DELIMITER ;
 DELIMITER //
 DELIMITER //
 CREATE PROCEDURE InsertarUsuario (
-    IN p_CI VARCHAR(20),
-    IN p_Password VARCHAR(255)
+    IN p_CI VARCHAR(20)
 )
 BEGIN
+    DECLARE p_Password VARCHAR(255) DEFAULT 'micodigo';
     DECLARE p_Nombre VARCHAR(50);
     DECLARE p_Apellido VARCHAR(50);
     DECLARE v_NombreUsuario VARCHAR(50);
@@ -56,6 +56,7 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+
 
 
 
