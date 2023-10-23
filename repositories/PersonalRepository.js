@@ -7,7 +7,6 @@ class PersonalRepository {
     }
 
     //Metodo insertar registro personales
-
     async insertarPersonal(personal){
         const {CI, Nombre, Apellido, Telefono, Email} = personal;
         console.log("Se insertaron correctamente los siguientes datos",CI, Nombre, Apellido, Telefono, Email);
@@ -20,6 +19,21 @@ class PersonalRepository {
         const [result] = await pool.execute('CALL InsertarPersonal(?, ?, ?, ?, ?)', [CI, Nombre, Apellido, Telefono, Email]);
         return result;
     }
+
+      //Metodo Actualizar registro personales
+      async actualizarPersonal(personal){
+        const { CI, Nombre, Apellido, Telefono, Email} = personal;
+         const [result] = await pool.execute('CALL ActualizarPersonal(?, ?, ?, ?, ?)',[CI, Nombre, Apellido, Telefono, Email]);
+         return result;
+      }
+
+          //Metodo Eliminar Registro Personal
+          async eliminarPersonal(CI){
+            const [result] = await pool.execute('CALL EliminarPersonal(?)', [CI]);
+            return result;
+          }
+
+
 }
 
 module.exports = new PersonalRepository();

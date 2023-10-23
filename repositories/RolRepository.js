@@ -19,6 +19,28 @@ class RolRepository {
          const [result] = await pool.execute('CALL InsertarRol(?, ?)', [RoleName, RoleDescription]);
         return result;
     }
+
+
+//Metodo actualizar rol
+async actualizarRol(rol) {
+    const {RoleID, RoleName, RoleDescription} = rol;
+    const [result] = await pool.execute('CALL ActualizarRol(?, ?, ?)', [RoleID, RoleName, RoleDescription]);
+    return result;
+}
+//Metodo eliminar Rol
+async eliminarRol(RoleID) {
+    const [result] = await pool.execute('CALL EliminarRol(?)', [RoleID]);
+    return result;
+}
+
+//Metodo asignar Rol a usuario
+async asignarRolAUsuario(UsuarioID, RoleID) {
+    const [result] = await pool.execute('CALL AsignarRolUsuario(?, ?)', [UsuarioID, RoleID]);
+    return result;
+}
+
+
+
 }
 
 module.exports = new RolRepository();

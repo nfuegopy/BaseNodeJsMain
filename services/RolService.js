@@ -8,5 +8,22 @@ class RolService {
     async insertarRol(rol){
         return await RolRepository.insertarRol(rol);
      }
+
+     //Metodo actualizar Rol
+     async actualizarRol(rol) {
+        return await RolRepository.actualizarRol(rol);
+    }
+
+    //Metodo Eliminar Rol
+    async eliminarRol(RoleID) {
+        return await RolRepository.eliminarRol(RoleID);
+    }
+
+
+    //Metodo asignar Rol
+    async asignarRolAUsuario(UsuarioID, RoleID) {
+        return await RolRepository.asignarRolAUsuario(UsuarioID, RoleID);
+    }
+    
 }
 module.exports = new RolService();
