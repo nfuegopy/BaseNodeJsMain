@@ -21,7 +21,7 @@ DELIMITER ;
 
 
 DELIMITER //
-CREATE PROCEDURE ActualizarPersonal (IN p_CI VARCHAR(20), IN p_Nombre VARCHAR(50), IN p_Apellido VARCHAR(50), IN p_Telefono VARCHAR(15), IN p_Email VARCHAR(100))
+CREATE PROCEDURE ActualizarPersonal (IN p_CI VARCHAR(20), IN p_Nombre VARCHAR(50) , IN p_Apellido VARCHAR(50), IN p_Telefono VARCHAR(15), IN p_Email VARCHAR(100))
 BEGIN
     UPDATE personal SET Nombre = p_Nombre, Apellido = p_Apellido, Telefono = p_Telefono, Email = p_Email WHERE CI = p_CI;
 END //
@@ -57,17 +57,34 @@ BEGIN
 END //
 DELIMITER ;
 
-
-
+DELIMITER //
+CREATE PROCEDURE ActualizarNombreUsuario (
+    IN p_ID INT,
+    IN p_Nombre_Usuario VARCHAR(50)
+)
+BEGIN
+    UPDATE usuario 
+    SET Nombre_Usuario = p_Nombre_Usuario 
+    WHERE ID = p_ID;
+END //
+DELIMITER ;
 
 
 DELIMITER //
-CREATE PROCEDURE ActualizarUsuario (IN p_ID INT, IN p_Nombre_Usuario VARCHAR(50), IN p_Password VARCHAR(255))
+CREATE PROCEDURE ResetearPassword (
+    IN p_ID INT
+)
 BEGIN
-    SET p_Password = SHA2(p_Password, 256);
-    UPDATE usuario SET Nombre_Usuario = p_Nombre_Usuario, Password = p_Password WHERE ID = p_ID;
+    SET @PasswordDefault = 'micodigo';
+    SET @PasswordHasheada = SHA2(@PasswordDefault, 256);
+    UPDATE usuario 
+    SET Password = @PasswordHasheada 
+    WHERE ID = p_ID;
 END //
 DELIMITER ;
+
+
+
 
 DELIMITER //
 CREATE PROCEDURE EliminarUsuario (IN p_ID INT)
