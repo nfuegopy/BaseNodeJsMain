@@ -19,6 +19,23 @@ class UsuarioRepository{
      const [result] = await pool.execute('CALL InsertarUsuario(?)',[CI]);
      return result;
     }
+
+    async actualizarNombreUsuario(id, nombreUsuario) {
+        const [result] = await pool.execute('CALL ActualizarNombreUsuario(?, ?)', [id, nombreUsuario]);
+        return result;
+    }
+
+    async resetearPassword(id, password) {
+        const [result] = await pool.execute('CALL ResetearPassword(?, ?)', [id, password]);
+        return result;
+    }
+
+    async eliminarUsuario(id) {
+        const [result] = await pool.execute('CALL EliminarUsuario(?)', [id]);
+        return result;
+    }
+
+    
 }
 
 module.exports = new UsuarioRepository();

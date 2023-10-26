@@ -1,5 +1,4 @@
 use sistemainicial;
-
 DELIMITER //
 CREATE PROCEDURE InsertarPersonal (
     IN p_CI VARCHAR(20), 
@@ -35,6 +34,7 @@ END //
 DELIMITER ;
 
 DELIMITER //
+
 DELIMITER //
 CREATE PROCEDURE InsertarUsuario (
     IN p_CI VARCHAR(20)
@@ -44,18 +44,15 @@ BEGIN
     DECLARE p_Nombre VARCHAR(50);
     DECLARE p_Apellido VARCHAR(50);
     DECLARE v_NombreUsuario VARCHAR(50);
+    SELECT Nombre, Apellido INTO p_Nombre, p_Apellido FROM personal WHERE CI = p_CI;
+    SET p_Apellido = SUBSTRING_INDEX(p_Apellido, ' ', 1);
+    SET v_NombreUsuario = CONCAT(LEFT(p_Nombre, 1), p_Apellido);
+    SET p_Password = SHA2(p_Password, 256);
+    INSERT INTO usuario (CI, Nombre_Usuario, Password) VALUES (p_CI, v_NombreUsuario, p_Password);
 
-    IF NOT EXISTS (SELECT 1 FROM usuario WHERE CI = p_CI) THEN
-        SELECT Nombre, Apellido INTO p_Nombre, p_Apellido FROM personal WHERE CI = p_CI;
-        SET p_Apellido = SUBSTRING_INDEX(p_Apellido, ' ', 1);
-        SET v_NombreUsuario = CONCAT(LEFT(p_Nombre, 1), p_Apellido, RIGHT(p_CI, 3));
-        SET p_Password = SHA2(p_Password, 256);
-        INSERT INTO usuario (CI, Nombre_Usuario, Password) VALUES (p_CI, v_NombreUsuario, p_Password);
-    ELSE
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Este personal ya cuenta con usuario.';
-    END IF;
 END //
 DELIMITER ;
+
 
 DELIMITER //
 CREATE PROCEDURE ActualizarNombreUsuario (
@@ -72,16 +69,17 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE ResetearPassword (
-    IN p_ID INT
+    IN p_ID INT,
+    IN p_Password VARCHAR(255)
 )
 BEGIN
-    SET @PasswordDefault = 'micodigo';
-    SET @PasswordHasheada = SHA2(@PasswordDefault, 256);
+    SET @PasswordHasheada = SHA2(p_Password, 256);
     UPDATE usuario 
     SET Password = @PasswordHasheada 
     WHERE ID = p_ID;
 END //
 DELIMITER ;
+
 
 
 
@@ -115,17 +113,32 @@ END //
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE IniciarSesion (IN p_Nombre_Usuario VARCHAR(50), IN p_Password VARCHAR(255), OUT p_Resultado INT)
+CREATE PROCEDURE IniciarSesion (
+    IN p_Nombre_Usuario VARCHAR(50), 
+    IN p_Password VARCHAR(255), 
+    OUT p_Resultado INT,
+     OUT p_UsuarioID INT
+)
 BEGIN
     -- Asignamos un valor predeterminado al resultado
     SET p_Resultado = 0;
+    SET p_UsuarioID = NULL;
 
     -- Verifica si el nombre de usuario y la contraseña coinciden con algún registro en la base de datos
     IF EXISTS (SELECT 1 FROM usuario WHERE Nombre_Usuario = p_Nombre_Usuario AND Password = SHA2(p_Password, 256)) THEN
-        SET p_Resultado = 1;
+        -- Si la contraseña es "micodigo", establecemos el resultado en 2
+        IF p_Password = 'micodigo' THEN
+            SET p_Resultado = 2;
+        -- Si la contraseña no es "micodigo", establecemos el resultado en 1
+        ELSE
+            SET p_Resultado = 1;
+        END IF;
+                SELECT ID INTO p_UsuarioID FROM usuario WHERE Nombre_Usuario = p_Nombre_Usuario AND Password = SHA2(p_Password, 256);
     END IF;
 END //
 DELIMITER ;
+
+
 
 DELIMITER //
 CREATE PROCEDURE ObtenerNombreUsuario (IN p_Nombre_Usuario VARCHAR(50), OUT p_Nombre VARCHAR(50), OUT p_Apellido VARCHAR(50), OUT p_UsuarioID INT)

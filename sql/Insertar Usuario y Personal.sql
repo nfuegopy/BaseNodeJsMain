@@ -20,3 +20,4 @@ VALUES (@CI, @NombreUsuario, SHA2(@Password, 256));
 
 CALL InsertarRol('Administrador','Se encarga del manteniemiento total del sistema con acceso total');
 CALL AsignarRolUsuario(1,1);
+CALL InsertarUsuario('V0123456');
