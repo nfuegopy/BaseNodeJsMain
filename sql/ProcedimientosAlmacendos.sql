@@ -120,7 +120,7 @@ CREATE PROCEDURE IniciarSesion (
      OUT p_UsuarioID INT
 )
 BEGIN
-    -- Asignamos un valor predeterminado al resultado
+    -- Asignamos un valor predeterminado al resultado 
     SET p_Resultado = 0;
     SET p_UsuarioID = NULL;
 

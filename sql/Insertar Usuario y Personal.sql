@@ -14,7 +14,7 @@ CALL InsertarPersonal('V0123456', 'Luis', 'Castillo Rojas', '1010101010', 'luis@
 SET @CI := 'V1234567';
 SET @NombreUsuario := 'Admin';
 SET @Password := '1989';
--- Insertar nuevo usuario con contraseña encriptada
+-- Insertar nuevo usuario con contraseña encriptada 
 INSERT INTO usuario (CI, Nombre_Usuario, Password)
 VALUES (@CI, @NombreUsuario, SHA2(@Password, 256));
 
