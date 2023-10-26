@@ -8,6 +8,18 @@ class UsuarioService{
     async insertarUsuario(usuario){
         return await UsuarioRepository.insertarUsuario(usuario);
     }
+
+    async actualizarNombreUsuario(id, nombreUsuario) {
+        return await UsuarioRepository.actualizarNombreUsuario(id, nombreUsuario);
+    }
+
+    async resetearPassword(id, password) {
+        return await UsuarioRepository.resetearPassword(id, password);
+    }
+
+    async eliminarUsuario(id) {
+        return await UsuarioRepository.eliminarUsuario(id);
+    }
 }
 
 module.exports= new UsuarioService();
