@@ -5,7 +5,7 @@ const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: 'admin',
-  database: 'sistemainicial',
+  database: 'odontologo',
   waitForConnections: true,
 });
 
