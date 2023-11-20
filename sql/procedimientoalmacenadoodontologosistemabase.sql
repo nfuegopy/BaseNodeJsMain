@@ -149,3 +149,35 @@ BEGIN
     WHERE u.Nombre_Usuario = p_Nombre_Usuario;
 END //
 DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE InsertarRol (
+   
+    IN p_RoleName VARCHAR(50), 
+    IN p_RoleDescription VARCHAR(255)
+  )
+BEGIN
+ 
+        INSERT INTO roles (RoleName, RoleDescription) 
+        VALUES (p_RoleName, p_RoleDescription);
+  
+END //
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE AsignarRolUsuario (
+   
+    IN p_UsuarioID VARCHAR(50), 
+    IN p_RoleID VARCHAR(255)
+  )
+BEGIN
+ 
+        INSERT INTO usuario_roles (UsuarioID, RoleID) 
+        VALUES (p_UsuarioID, p_RoleID);
+  
+END //
+DELIMITER ;
