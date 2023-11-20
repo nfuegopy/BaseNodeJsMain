@@ -1,10 +1,11 @@
 // 1. Importación de módulos y rutas
 const express = require('express');
 const cors = require('cors');
-const authRoutes = require('./routes/authRoutes');
-const personalRoutes = require('./routes/PersonalRoutes');
-const usuarioRoutes = require('./routes/UsuarioRoute');
-const rolRoutes = require('./routes/RolRoutes');
+const authRoutes = require('./routes/mantenimiento/authRoutes');
+const personalRoutes = require('./routes/mantenimiento/PersonalRoutes');
+const usuarioRoutes = require('./routes/mantenimiento/UsuarioRoute');
+const rolRoutes = require('./routes/mantenimiento/RolRoutes');
+const areapersonalRoutes = require('./routes/mantenimiento/areapersonalRoutes');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use('/auth', authRoutes);
 app.use('/personal', personalRoutes);
 app.use('/usuario', usuarioRoutes);
 app.use('/rol', rolRoutes);
+app.use('/area', areapersonalRoutes)
 
 
 // 4. Inicio del servidor
